@@ -1,0 +1,32 @@
+new_empty_c() {
+  cat <<EOF >$TMPDIR/test.c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+int main(int argc,char **argv)
+{
+
+}
+EOF
+}
+
+while :; do
+  [[ -e $TMPDIR/test.c ]] || new_empty_c
+  nano $TMPDIR/test.c
+  clang-format $TMPDIR/test.c | bat -l C
+  cd $TMPDIR
+  cc $TMPDIR/test.c
+  echo
+  echo run result:
+  echo
+  ./a.out
+  echo
+  read -s -n 1 xxx
+  [ $xxx == "q" ] && exit
+  [ $xxx == "c" ] && new_empty_c
+  clear
+done
