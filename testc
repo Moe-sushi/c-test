@@ -17,7 +17,7 @@ EOF
 while :; do
   [[ -e $TMPDIR/test.c ]] || new_empty_c
   nano $TMPDIR/test.c
-  clang-format $TMPDIR/test.c | bat -l C
+  clang-format $TMPDIR/test.c | bat -pp -l C
   cd $TMPDIR
   cc $TMPDIR/test.c
   echo
